@@ -1,0 +1,68 @@
+{% extends 'autos/base.html' %}
+
+{% block title %}Lista de Autos — AutoManager{% endblock %}
+
+{% block content %}
+
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h2 class="fw-bold mb-1"><i class="bi bi-car-front me-2 text-primary"></i>Lista de Autos</h2>
+        <p class="text-muted mb-0">Total registrados: <strong>{{ total }}</strong> auto{{ total|pluralize:"s" }}</p>
+    </div>
+    <a href="{% url 'agregar_auto' %}" class="btn btn-success">
+        <i class="bi bi-plus-lg me-1"></i>Agregar Auto
+    </a>
+</div>
+
+{% if autos %}
+<div class="card">
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-hover mb-0">
+                <thead>
+                    <tr>
+                        <th style="width: 50px;">#</th>
+                        <th><i class="bi bi-tag me-1"></i>Marca</th>
+                        <th><i class="bi bi-car-front me-1"></i>Modelo</th>
+                        <th><i class="bi bi-calendar3 me-1"></i>Año</th>
+                        <th><i class="bi bi-currency-dollar me-1"></i>Precio</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for auto in autos %}
+                    <tr>
+                        <td class="text-muted">{{ forloop.counter }}</td>
+                        <td>
+                            <span class="fw-semibold">{{ auto.marca }}</span>
+                        </td>
+                        <td>{{ auto.modelo }}</td>
+                        <td>
+                            <span class="badge-año">{{ auto.año }}</span>
+                        </td>
+                        <td class="fw-semibold text-success">
+                            ${{ auto.precio|floatformat:2 }}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+{% else %}
+
+<div class="card text-center py-5">
+    <div class="card-body">
+        <i class="bi bi-car-front display-1 text-muted mb-3 d-block"></i>
+        <h4 class="text-muted">No hay autos registrados</h4>
+        <p class="text-muted">Comienza agregando tu primer auto al sistema.</p>
+        <a href="{% url 'agregar_auto' %}" class="btn btn-primary mt-2">
+            <i class="bi bi-plus-lg me-1"></i>Agregar el primer auto
+        </a>
+    </div>
+</div>
+{% endif %}
+
+{% endblock %}
